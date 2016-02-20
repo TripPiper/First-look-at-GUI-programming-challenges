@@ -1,0 +1,166 @@
+/*
+ A retail company must file a monthly sales tax report listing the total sales 
+for the month, and the amount of state and county sales tax collected. 
+The state sales tax rate is 4% and the county sales tax rate is 2%. 
+Create a GUI application that allows the user to enter the total sales for 
+the month into a text field. From this figure, the application should calculate and display the following:
+
+    The amount of county sales tax
+    The amount of state sales tax
+    The total sales tax (county plus state) 
+
+Use named constants to represent the county tax rate (0.02) and the state tax rate (0.04)
+ */
+package ch7programchallenge;
+
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+/**
+ *
+ * @author Tutor
+ */
+public class MonthlySalesTax extends JFrame {
+
+    private JPanel panel;
+    private JLabel totalMonthlySales;
+    private JTextField totalMonthlyField;
+    private JTextField countyTaxField;
+    private JTextField stateTaxField;
+    private JTextField totalTaxField;
+    private JLabel CountyLabel;
+    private JLabel StateLabel;
+    private JLabel TotalLabel;
+    private JButton TotalButton;
+    private final int WINDOW_WIDTH = 400;
+    private final int WINDOW_HEIGHT = 200;
+    private final double COUNTY_TAX = .02;
+    private final double STATE_TAX = .04;
+
+    /**
+     * Constructor
+     */
+    public MonthlySalesTax() {
+
+        //Set the window title
+        setTitle(" Monthly Sales Tax ");
+
+        // Set the size of the window.
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+        //Specify what happens when the close buttom is clicked.
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //build Panel and add it to the frame.
+        buildPanel();
+
+        // Add the panel to he frame
+        add(panel);
+
+        // Sets the size of the window
+        pack();
+
+        // disply the window
+        setVisible(true);
+
+    }
+
+    /**
+     * The buildPanel methods adds a label , text field, and a button to a
+     * panel.
+     *
+     */
+    private void buildPanel() {
+        // Creates a label to display instructions.
+        totalMonthlySales = new JLabel("Enter the total monthly sales ");
+
+        // Creates a text field 10 charaters wide.
+        totalMonthlyField = new JTextField(10);
+
+        // Creates a button with the caption "County Sales Tax".
+        CountyLabel = new JLabel("County Sales Tax");
+        // Creates a text field 10 charaters wide.
+        countyTaxField = new JTextField(10);
+
+        // Creates a button with the caption "State Sales Tax".
+        StateLabel = new JLabel("State Sales Tax");
+
+        // Creates a text field 10 charaters wide.
+        stateTaxField = new JTextField(10);
+
+        // Creates a button with the caption "Total Sales Tax".
+        TotalButton = new JButton("Calculate Taxes ");
+        // Creates a button with the caption "Total Sales Tax".
+        TotalLabel = new JLabel("Total Taxes ");
+        // Creates a text field 10 charaters wide.
+        totalTaxField = new JTextField(10);
+
+        // Add an action listener to the button.
+        TotalButton.addActionListener(new TotalButtonListener());
+
+        // Creates Panel object and let the panel
+        //field reference it.
+        panel = new JPanel();
+
+        // Add the label, text field, and button
+        // components to the panel
+        panel.add(totalMonthlySales);
+        panel.add(totalMonthlyField);
+        panel.add(TotalButton);
+        panel.add(CountyLabel);
+        panel.add(countyTaxField);
+        panel.add(StateLabel);
+        panel.add(stateTaxField);
+        panel.add(TotalLabel);
+        panel.add(totalTaxField);
+
+    }
+
+    /**
+     * calculateButton is an action listener class for the Calculate Button
+     */
+    private class TotalButtonListener implements ActionListener {
+        // This method executes when the user clicks on the Calculate Button
+
+        public void actionPerformed(ActionEvent e) {
+            String MonthlySalesInput;
+
+            double mSales;
+            double countyTax;
+            double stateTax;
+            double totalTax;
+            DecimalFormat formatter = new DecimalFormat("00.00");
+
+            // get the text entered by the user in the text field box
+            MonthlySalesInput = totalMonthlyField.getText();
+
+            // convert wholesale text to double
+            mSales = Double.parseDouble(MonthlySalesInput);
+
+            countyTax = (mSales * COUNTY_TAX);   // Calculates the county tax
+            stateTax = (mSales * STATE_TAX);    // Calculates the state tax
+            totalTax = (countyTax + stateTax);
+            // Formats retail price and converts to string text
+            String countyTaxS = formatter.format(countyTax);
+            String stateTaxS = formatter.format(stateTax);
+            String totalTaxS = formatter.format(totalTax);
+            // display the results
+            countyTaxField.setText(countyTaxS);
+            stateTaxField.setText(stateTaxS);
+            totalTaxField.setText(totalTaxS);
+
+        }
+    }
+
+    public static void main(String[] args) {
+
+        new MonthlySalesTax();
+    }
+}
