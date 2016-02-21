@@ -1,0 +1,537 @@
+package ch7programchallenge;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+/**
+ * - Number of days on the trip - Amount of airfare, if any - Amount of car
+ * rental fees, if any - Number of miles driven, if a private vehicle was used -
+ * Amount of parking fees, if any - Amount of taxi charges, if any - Conference
+ * or seminar registration fees, if any - Lodging charges, per night
+ *
+ * The company reimburses travel expenses according to the following policy: -
+ * $37 per day for meals - Parking fees, up to $10.00 per day - Taxi charges up
+ * to $95.00 per day - If a private vehicle is used, $0.27 per mile driven
+ *
+ * The application should calculate and display the following: - Total expenses
+ * incurred by the business person - Total allowable expenses for the trip - The
+ * excess that must be paid by the business person, if any - The amount saved by
+ * the business person if the expenses are under the total allowed
+ */
+/**
+ *
+ * @author Tutor
+ */
+public class TravelExpenses extends JFrame {
+
+    private JPanel panel;		                  // to reference a panel
+    private JLabel numberDaysMessageLabel;		  // to reference wholesale label
+    private JLabel amountOfAirFareMessageLabel;	          // to reference mark up label
+    private JLabel amountCarRentalLabel;
+    private JLabel numberOfMilesDrivenMessageLabel;       // get number of miles driven in private vechical
+    private JLabel parkingFeesMessageLabel;	          // to reference parking fees
+    private JLabel taxiFeesMessageLabelel;
+    private JLabel registrationMessageLabel;		// to reference wholesale label
+    private JLabel lodgingChargesMessageLabel;		// to reference per night lodging charges
+
+    private JTextField numberDaysPriceField;	          // to reference the Whole Sale Price Field
+    private JTextField amountOfAirFareField;		  // to reference the Mark Up text field
+    private JTextField amountCarRentalField;	          // to reference the Retail Price Field
+    private JTextField numberOfMilesDrivenField;	          // to reference the Whole Sale Price Field
+    private JTextField parkingFeesField;		  // to reference the Mark Up text field
+    private JTextField registrationField;	          // to reference the Retail Price Field
+    private JTextField lodgingChargesField;		  // to reference the Mark Up text field
+    private JTextField taxiFeesField;
+    private JTextField reimbursementField;
+
+    private JButton calculateButton;			  // to reference calculate button
+    private final int WINDOW_WIDTH = 600;			// Window Width
+    private final int WINDOW_HEIGHT = 150;			// Window Height 
+
+    // 5 required constants
+    private double MEALS_AMOUNT = 37.00; // Meals amount reimbursed by company per day.
+    private double parkingFeesReimbursed = 10.00; // Parking Fees amount reimbursed by company per day.
+    private double taxiChargesReimbursed = 20.00; // Taxi Charges amount reimbursed by company per day.
+    private double lodgingChargesReimbursed = 95.00; // Lodging Charges amount reimbursed by company per day.
+    private double prVechiclePerMileReimbursed = 0.27; // Private Vehicle per miles reimbursment rate.
+
+    public TravelExpenses() {
+
+        // set window title
+        setTitle("Travel Expense Calculator");
+
+        // set widow size
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+        // tell what to do when the window closes
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // build the panel and add it to the frame
+        buildPanel();
+
+        // add the panel to the frame's content pane
+        add(panel);
+
+        // display the window
+        setVisible(true);
+    }
+
+    private void buildPanel() {
+
+        // create a label for the wholesale price
+        numberDaysMessageLabel = new JLabel("Enter number of days on trip ");
+
+        // create a text field 10 characters wide
+        numberDaysPriceField = new JTextField(10);
+
+        // create a label for the mark up percentage
+        amountOfAirFareMessageLabel = new JLabel("Enter amount of airfare ");
+
+        // create a text field 10 characters wide
+        amountOfAirFareField = new JTextField(10);
+
+        // create a label for the wholesale price
+        amountCarRentalLabel = new JLabel("Enter amount of car rental ");
+
+        // create a text field 10 characters wide
+        amountCarRentalField = new JTextField(10);
+
+        // create a label for the mark up percentage
+        numberOfMilesDrivenMessageLabel = new JLabel("Enter number of miles driven in personal car ");
+
+        // create a text field 10 characters wide
+        numberOfMilesDrivenField = new JTextField(10);
+
+        // create a label for parking fees
+        parkingFeesMessageLabel = new JLabel("Enter parking fees ");
+
+        // create a text field 10 characters wide
+        parkingFeesField = new JTextField(10);
+
+        // create a label for the mark up percentage
+        registrationMessageLabel = new JLabel("Enter registration fees ");
+
+        // create a text field 10 characters wide
+        registrationField = new JTextField(10);
+
+        // create a label for the wholesale price
+        lodgingChargesMessageLabel = new JLabel("Enter lodging fees ");
+
+        // create a text field 10 characters wide
+        lodgingChargesField = new JTextField(10);
+
+        // create a label for the mark up percentage
+        taxiFeesMessageLabelel = new JLabel("Enter taxi fees ");
+
+        // create a text field 10 characters wide
+        taxiFeesField = new JTextField(10);
+
+        reimbursementField = new JTextField(10);
+
+        // create a button with the capation "Calculate Retail Price"
+        calculateButton = new JButton("Calculate reimbursement ");
+
+        // add an action listener to the button
+        calculateButton.addActionListener(new TravelExpenses.CalcButtonListener());
+
+        // create a JPanel object and let the panel filed reference it
+        panel = new JPanel();
+
+        // add the labels, text field and button componanets to the panel
+        panel.add(numberDaysMessageLabel);
+        panel.add(numberDaysPriceField);
+        panel.add(amountOfAirFareMessageLabel);
+        panel.add(amountOfAirFareField);
+        panel.add(amountCarRentalLabel);
+        panel.add(amountCarRentalField);
+        panel.add(numberOfMilesDrivenMessageLabel);
+        panel.add(numberOfMilesDrivenField);
+        panel.add(parkingFeesMessageLabel);
+        panel.add(parkingFeesField);
+        panel.add(taxiFeesMessageLabelel);
+        panel.add(taxiFeesField);
+        panel.add(lodgingChargesMessageLabel);
+        panel.add(lodgingChargesField);
+        panel.add(registrationMessageLabel);
+        panel.add(registrationField);
+        panel.add(calculateButton);
+        panel.add(reimbursementField);
+
+    }
+
+    private class CalcButtonListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+
+            String numberOfDaysInput;	// to hold user input for wholesale price
+            String airfareInput;		// to hold user input for mark up percentage
+            String carRentalInput;	// to hold user input for wholesale price
+            String milesDrivenInput;		// to hold user input for mark up percentage
+            String parkingFeesInput;	// to hold user input for wholesale price
+            String taxiChargesInput;		// to hold user input for mark up percentage
+            String registrationFeesInput;	// to hold user input for wholesale price
+            String perNightLodgingFeesInput;		// to hold user input for mark up percentage
+            double daysD;		// declare retail price as a double
+            double airFareD;			// declare wholesale prcie as a double
+            double carRentalD;				// declare markup percentage as a double
+            double milesD;		// declare retail price as a double
+            double parkingFeeD;			// declare wholesale prcie as a double
+            double taxiD;
+            double registrationD;			// declare wholesale price as a double
+            double lodgingPernightD;
+
+            DecimalFormat formatter = new DecimalFormat("00.00");
+            // get the text entered by the user in the text field box
+            numberOfDaysInput = numberDaysPriceField.getText();
+            airfareInput = amountOfAirFareField.getText();
+            carRentalInput = amountCarRentalField.getText();
+            milesDrivenInput = numberOfMilesDrivenField.getText();
+            parkingFeesInput = parkingFeesField.getText();
+            taxiChargesInput = taxiFeesField.getText();
+            perNightLodgingFeesInput = lodgingChargesField.getText();
+            registrationFeesInput = registrationField.getText();
+
+            // Convert input text to double
+            daysD = Double.parseDouble(numberOfDaysInput);
+            airFareD = Double.parseDouble(airfareInput);
+            carRentalD = Double.parseDouble(carRentalInput);
+            milesD = Double.parseDouble(milesDrivenInput);
+            parkingFeeD = Double.parseDouble(parkingFeesInput);
+            taxiD = Double.parseDouble(taxiChargesInput);
+            registrationD = Double.parseDouble(registrationFeesInput);
+            lodgingPernightD = Double.parseDouble(perNightLodgingFeesInput);
+
+            if (lodgingPernightD > lodgingChargesReimbursed) {
+                lodgingPernightD = lodgingChargesReimbursed;
+            } else {
+                lodgingPernightD = lodgingPernightD;
+            }
+
+            if (taxiD > taxiChargesReimbursed) {
+                taxiD = taxiChargesReimbursed;
+            } else {
+                taxiD = taxiD;
+            }
+
+            if (parkingFeeD > parkingFeesReimbursed) {
+                parkingFeeD = parkingFeesReimbursed;
+            } else {
+                parkingFeeD = parkingFeeD;
+            }
+
+            double RDays = daysD * lodgingPernightD;
+            double RTaxi = daysD * taxiD;
+            double RParking = daysD * parkingFeeD;
+            double RMiles = milesD * prVechiclePerMileReimbursed;
+            double RMeals = daysD * MEALS_AMOUNT;
+
+            // do function to calculate retail price( wholesale * markup)
+            double reimbursementTotalD = (RDays + RTaxi + RParking + RMiles + RMeals 
+                    + airFareD + carRentalD + registrationD );
+            // Formats retail price and converts to string text
+            String reimbursementTotalS = formatter.format(reimbursementTotalD);
+            // display the results
+
+            reimbursementField.setText(reimbursementTotalS);
+        }
+    }
+
+    public static void main(String[] args) {
+        new TravelExpenses();
+    }
+}
+
+
+
+DIFFERENT CODE STARTS HERE
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ch7programchallenge;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.JOptionPane;
+import java.text.DecimalFormat;
+/**
+ *
+ * @author Tutor
+ */
+
+
+public class TravelWorksheet extends JFrame 
+{
+
+/**
+* The TravelExpense class creates the GUI for the
+* Travel Expenses application.
+*/
+
+
+// The following variables will reference the
+// custom panel objects
+private JPanel travelInfoPanel; // TravelInfo panel
+private JPanel buttonPanel; // Buttons panel
+
+// Labels for the Travel Information fields.
+private JLabel numDaysOnTripLabel;
+private JLabel amountAirfairLabel;
+private JLabel amountCarRentalLabel;
+private JLabel milesDrivenLabel;
+private JLabel parkingFeesLabel;
+private JLabel taxiFeesLabel;
+private JLabel confRegLabel;
+private JLabel lodgingChargesPerNightLabel;
+
+// Text Fields for Travel Information entry
+private JTextField numDaysOnTripTextField;
+private JTextField amountAirfairTextField;
+private JTextField amountCarRentalTextField;
+private JTextField milesDrivenTextField;
+private JTextField parkingFeesTextField;
+private JTextField taxiFeesTextField;
+private JTextField confRegTextField;
+private JTextField lodgingChargesPerNightTextField;
+
+// Buttons
+private JButton resetButton;
+private JButton calcButton;
+
+// 5 required constants
+private double mealsAmount = 37.00; // Meals amount reimbursed by company per day.
+private double parkingFeesReimbursed = 10.00; // Parking Fees amount reimbursed by company per day.
+private double taxiChargesReimbursed = 20.00; // Taxi Charges amount reimbursed by company per day.
+private double lodgingChargesReimbursed = 95.00; // Lodging Charges amount reimbursed by company per day.
+private double prVechiclePerMileReimbursed = 0.27; // Private Vehicle per miles reimbursment rate.
+
+
+/**
+* Constructor
+*/
+
+
+public TravelWorksheet()
+{
+// Call the JFrame constructor & set the title.
+super("Travel Expenses");
+
+// Set the main window to open in the center of the screen.
+setLocationRelativeTo(null);
+
+// Specify an action for the close button.
+setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+// Create a BorderLayout manager for the content pane.
+setLayout(new BorderLayout());
+
+// Build the TravelInfo and Buttons panels
+buildTravelInfoPanel();
+buildButtonPanel();
+
+// Add the panels to the frame's content pane
+add(travelInfoPanel, BorderLayout.CENTER);
+add(buttonPanel, BorderLayout.SOUTH);
+
+// Pack the contents of the window and display it.
+pack();
+setVisible(true);
+}
+
+// The buildTravelInfoPanel method adds the labels and text fiels to the TravelInfo panel.
+
+private void buildTravelInfoPanel()
+{
+// Create the labels for TravelInfo fields
+numDaysOnTripLabel = new JLabel("Number of days on trip: ");
+amountAirfairLabel = new JLabel("Amount of airfair: ");
+amountCarRentalLabel = new JLabel("Amount of car rental: ");
+milesDrivenLabel = new JLabel("Miles driven: ");
+parkingFeesLabel = new JLabel("Parking Fees: ");
+taxiFeesLabel = new JLabel("Taxi fees: ");
+confRegLabel = new JLabel("Conference registration: ");
+lodgingChargesPerNightLabel = new JLabel("Lodging charges per night: ");
+
+// Create the text boxes for TravelInfo user input
+numDaysOnTripTextField = new JTextField(3);
+amountAirfairTextField = new JTextField(8);
+amountCarRentalTextField = new JTextField(8);
+milesDrivenTextField = new JTextField(4);
+parkingFeesTextField = new JTextField(6);
+taxiFeesTextField = new JTextField(6);
+confRegTextField = new JTextField(8);
+lodgingChargesPerNightTextField = new JTextField(6);
+
+// Create a panel to hold labels and text fields.
+travelInfoPanel = new JPanel();
+
+// Create GridLayout manager with 10 rows and 2 columns.
+travelInfoPanel.setLayout(new GridLayout(10, 2));
+
+// Add the 8 labels and 8 text fields to this panel.
+travelInfoPanel.add(numDaysOnTripLabel);
+travelInfoPanel.add(numDaysOnTripTextField);
+travelInfoPanel.add(amountAirfairLabel);
+travelInfoPanel.add(amountAirfairTextField);
+travelInfoPanel.add(amountCarRentalLabel);
+travelInfoPanel.add(amountCarRentalTextField);
+travelInfoPanel.add(milesDrivenLabel);
+travelInfoPanel.add(milesDrivenTextField);
+travelInfoPanel.add(parkingFeesLabel);
+travelInfoPanel.add(parkingFeesTextField);
+travelInfoPanel.add(taxiFeesLabel);
+travelInfoPanel.add(taxiFeesTextField);
+travelInfoPanel.add(confRegLabel);
+travelInfoPanel.add(confRegTextField);
+travelInfoPanel.add(lodgingChargesPerNightLabel);
+travelInfoPanel.add(lodgingChargesPerNightTextField);
+
+// Add an empty border around the panel for spacing.
+travelInfoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 1, 10));
+}
+
+/**
+* The buildButtonPanel method creates and adds the Reset and Calculate
+* buttons to the TravelExpense panel as its own panel.
+*/
+private void buildButtonPanel()
+{
+// Create the calcButton.
+calcButton = new JButton("Calculate");
+
+// Register an event listener for the calcButton.
+calcButton.addActionListener(new CalcButtonListener());
+
+//Create the resetButton.
+resetButton = new JButton("Reset");
+
+// Register an event listener for the resetButton.
+//resetButton.addActionListener(new ResetButtonListener());
+
+// Create the Buttons panels.
+buttonPanel = new JPanel();
+
+// Create BorderLayout manager.
+buttonPanel.setLayout(new BorderLayout(5, 5));
+
+// Add the two buttons to the buttonPanel.
+buttonPanel.add(resetButton, BorderLayout.WEST);
+buttonPanel.add(calcButton, BorderLayout.CENTER);
+
+// Add an empty border around the panel for spacing.
+buttonPanel.setBorder(BorderFactory.createEmptyBorder(1, 10, 10, 10));
+}
+
+/**
+* Private inner class that handles the event when the user clicks
+* the Calculate button .
+*/
+
+private class CalcButtonListener implements ActionListener
+{
+// Declare variables used in calculations.
+String input; // To hold the users input
+int days; // Number of days on trip entered
+double air; // Amount for airfair
+double carRental; // Amount of car rental
+double miles; // Miles driven
+double parking; // Parking fees
+double taxi; // Taxi fees
+double confReg; // Conference Registration charges
+double lodging; // Lodging charges per night
+double mealsAmount;
+
+public void actionPerformed(ActionEvent e)
+{
+//Declare variables for calculated items 
+ double actualExpenses;
+ double milesExpenses;
+double allowableExpenses;
+double excessAir;
+double excessCarRental;
+double excessParking;
+double excessTaxi;
+double excessLodging;
+double excessAmountTotal;
+double amountSaved;
+double paidBackAmount;
+
+// Create a DecimalFormat object to format the totals as dollar amounts.
+DecimalFormat dollar = new DecimalFormat("$#,##0.00");
+    }
+// Get Input Data the user entered in the text fields.
+private void getData()
+{
+days = Integer.parseInt(numDaysOnTripTextField.getText());
+air = Double.parseDouble(amountAirfairTextField.getText());
+carRental = Double.parseDouble(amountCarRentalTextField.getText());
+miles = Double.parseDouble(milesDrivenTextField.getText());
+parking = Double.parseDouble(parkingFeesTextField.getText());
+taxi = Double.parseDouble(taxiFeesTextField.getText());
+confReg = Double.parseDouble(confRegTextField.getText());
+lodging = Double.parseDouble(lodgingChargesPerNightTextField.getText());
+}
+
+
+// Determine actualExpenses method.
+private void determineActualExpenses(double actualExpenses, double milesExpenses)
+{
+actualExpenses = air + carRental + parking + taxi + confReg + lodging;
+actualExpenses = actualExpenses + milesExpenses;
+// need to calculate milesExpense = miles * prVechiclePerMileReimbursed (??)
+
+// Calculate the allowableExpenses.
+
+// Calculate the paidBackAmount.
+
+
+
+// Display the Totals message box.
+JOptionPane.showMessageDialog(null, "Total expenses: " + "\n" +
+"Allowable expenses: " + "\n" +
+"\n" + "Amount to be paid back: ");
+}
+
+
+/**
+* Private inner class that handles the event when the user clicks
+* the Reset button .
+*/
+
+private class ResetButtonListener implements ActionListener
+{
+public void actionPerformed(ActionEvent e)
+    {
+numDaysOnTripTextField.setText("");
+amountAirfairTextField.setText("");
+amountCarRentalTextField.setText("");
+milesDrivenTextField.setText("");
+parkingFeesTextField.setText("");
+taxiFeesTextField.setText("");
+confRegTextField.setText("");
+lodgingChargesPerNightTextField.setText("");
+}
+
+// The main method creates an instance of the TravelExpenses class.
+    }
+    }
+public static void main(String[] args)
+{
+new TravelWorksheet();
+}
+}
+
+
+
+
+
+
+
