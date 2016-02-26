@@ -28,7 +28,7 @@ public class TheaterRevenue extends JFrame {
     private JLabel adultTicketsSoldL;
     private JLabel childTicketsPriceL;
     private JLabel childTicketsSoldL;
-    private JLabel grossRevnueAdultLabel;		// to reference per night lodging charges
+    private JLabel grossRevnueAdultLabel;		
     private JLabel netReveuneAdultLabel;
     private JLabel grossRevnueChildLabel;
     private JLabel netRevenueChildLabel;
