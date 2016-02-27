@@ -1,0 +1,82 @@
+package longdistance;
+
+import java.awt.GridLayout;
+import java.text.DecimalFormat;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
+/**
+ *
+ * @author Tutor
+ */
+public class SelectRatePanel extends JPanel {
+
+    private JRadioButton dayTimeButton;         //
+    private JRadioButton eveningButton;
+    private JRadioButton offPeakButton;
+    private ButtonGroup radioButtonGroup;
+    private final double DAYTIME = .07;
+    private final double EVENING = .12;
+    private final double OFF_PEAK = .05;
+
+    /**
+     * Constructor
+     */
+    public SelectRatePanel() {
+
+        // Create a GridLayout manager with
+        // Two rows and one column
+        setLayout(new GridLayout(3, 1));
+
+        // Create the radio buttons.
+        dayTimeButton = new JRadioButton("6:00 am through 5:59 pm", true);
+        eveningButton = new JRadioButton("6:00 pm through 11:59 pm");
+        offPeakButton = new JRadioButton(" 12:00 am through 5:59 am");
+
+        // Group the radio buttons.
+        radioButtonGroup = new ButtonGroup();
+        radioButtonGroup.add(dayTimeButton);
+        radioButtonGroup.add(eveningButton);
+        radioButtonGroup.add(offPeakButton);
+
+        // Add border around the panel.
+        setBorder(BorderFactory.createTitledBorder(" Selects Rates "));
+
+        // Add the radio buttons to the panel.
+        add(dayTimeButton);
+        add(eveningButton);
+        add(offPeakButton);
+    }
+
+    /**
+     * getRatePlan method
+     *
+     * @returns The selected plan
+     */
+
+    public double getRatePlan() {
+
+        double rateCost = 0;
+
+        //Determine which radio button was clicked
+        if (dayTimeButton.isSelected()) {
+            // Multiply min by rate
+            rateCost = DAYTIME;
+        } else if (eveningButton.isSelected()) {
+            // Multiply min by rate
+            rateCost = EVENING;
+        } else if (offPeakButton.isSelected()) {
+            // Multiply min by rate
+            rateCost = OFF_PEAK;
+        }
+
+        return rateCost;
+    }
+
+}
