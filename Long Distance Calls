@@ -1,0 +1,135 @@
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
+/**
+ *
+ * @author Tutor
+ */
+public class LongDistanceCalls extends JFrame {
+
+    private JPanel panel;           // To reference the panel
+    private JLabel messageLabel;
+    private JLabel minMessageLabel;   // To reference a label
+    private JLabel priceMessageLabel;
+    private JTextField minTextField;  // to reference a test field
+    private JTextField priceTextField;
+    private JRadioButton dayTime;         //
+    private JRadioButton evening;
+    private JRadioButton offPeak;
+    private ButtonGroup radioButtonGroup;
+    private JButton calcButton;            // To reference a button
+    private final int WINDOW_WIDTH = 600;			// Window Width
+    private final int WINDOW_HEIGHT = 150;			// Window Height 
+
+    /**
+     * Constructor
+     */
+    public LongDistanceCalls() {
+        // set window title
+        setTitle("Long distance calls ");
+
+        // set widow size
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+        // tell what to do when the window closes
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setLayout(new GridLayout(9,2));
+
+        // build the panel and add it to the frame
+        buildPanel();
+
+        // add the panel to the frame's content pane
+        add(panel);
+
+        // display the window
+        setVisible(true);
+    }
+
+    private void buildPanel() {
+        // Creates a label to display instructions.
+        messageLabel = new JLabel("Select a rate: ");
+        // Creates a text field 7 charaters wide.
+
+        dayTime = new JRadioButton("6:00 am through 5:59 pm");
+
+        evening = new JRadioButton("6:00 pm through 11:59 pm");
+
+        offPeak = new JRadioButton(" 12:00 am through 5:59 am");
+
+        minMessageLabel = new JLabel("How many min have you used? ");
+        minTextField = new JTextField(7);
+        // Creates a button with the caption "Calculate".
+        // = new JButton("Calculate");
+        priceMessageLabel = new JLabel(" Your charge is :");
+        priceTextField = new JTextField(7);
+        // Group Radio buttons
+        radioButtonGroup = new ButtonGroup();
+        radioButtonGroup.add(dayTime);
+        radioButtonGroup.add(evening);
+        radioButtonGroup.add(offPeak);
+
+        // Add an action listener to the button.
+        dayTime.addActionListener(new RadioButtonListener());
+        evening.addActionListener(new RadioButtonListener());
+        offPeak.addActionListener(new RadioButtonListener());
+        // calcButton.addActionListener(new CalcButtonListener());
+
+        // Creates Panel object Add the label, text field, and button
+        // components to the panel
+        panel = new JPanel();
+        
+        panel.add(minMessageLabel);
+        panel.add(minTextField);
+        panel.add(messageLabel);
+        
+        panel.add(dayTime);
+        panel.add(evening);
+        panel.add(offPeak);
+        
+        panel.add(priceMessageLabel);
+        panel.add(priceTextField);
+    }
+
+    private class RadioButtonListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            String minInput;
+            double minConverted;   // Converts min to double
+
+            double dayPrice = 0;
+            // Gets min that were entered
+            minInput = minTextField.getText();
+
+            //Determine which radio button was clicked
+            if (e.getSource() == dayTime) {
+                // Multiply min by rate
+                dayPrice = Double.parseDouble(minInput) * .07;
+            } else if (e.getSource() == evening) {
+                // Multiply min by rate
+                dayPrice = Double.parseDouble(minInput) * .12;
+            } else if (e.getSource() == offPeak) {
+                // Multiply min by rate
+                dayPrice = Double.parseDouble(minInput) * .05;
+            }
+
+            // Create a DecimalFormat object to format the totals as dollar amounts.
+            DecimalFormat price = new DecimalFormat("$#,##0.00");
+
+            String cost = price.format(dayPrice);
+            priceTextField.setText(cost);
+        }
+    }
+
+    public static void main(String[] args) {
+        new LongDistanceCalls();
+    }
+}
