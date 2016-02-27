@@ -1,0 +1,132 @@
+
+
+/**
+ *
+ * @author Tutor
+ */
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import longdistance.GreetingPanel;
+import longdistance.SelectRatePanel;
+
+/**
+ *
+ * @author Tutor
+ */
+public class LongDistanceCalls extends JFrame {
+
+    //private GreetingPanel greetings;    // greetings panel // Not in currently in use
+    private SelectRatePanel selectRate;   //Rate panel
+    private MinutesUsed minutesUsed;    // minutes used duration panel
+    private JPanel buttonPanel;           // To hold buttons
+    private JButton calcButton;            // To reference a button
+    private JButton exitButton;
+    private final int WINDOW_WIDTH = 600;			// Window Width
+    private final int WINDOW_HEIGHT = 150;			// Window Height 
+
+    /**
+     * Constructor
+     */
+    public LongDistanceCalls() {
+        // set window title
+        setTitle("Long distance calls ");
+
+        // set widow size
+        //setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        // tell what to do when the window closes
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //Create Border Layout manager
+        setLayout(new BorderLayout());
+
+        // build custom panel and add it to the frame
+        selectRate = new SelectRatePanel();
+        minutesUsed = new MinutesUsed();
+        //greetings =new GreetingPanel();  // Not in currently in use
+
+       //Creates button panel
+        buildButtonPanel();
+
+        // Add the components to the content pane.
+      
+        add(selectRate, BorderLayout.NORTH);
+        add(minutesUsed, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
+        //add(priceTextField, BorderLayout.EAST);  //Not in use currently
+        //add( greetings, BorderLayout.WEST);     // Not in currently in use
+
+        // Display the window
+        pack();
+        setVisible(true);
+    }
+
+    /**
+     * The buildButtonPanel method builds the button panel
+     */
+    private void buildButtonPanel() {
+        //Creates panel for the buttons
+        buttonPanel = new JPanel();
+
+        //Create buttons
+        calcButton = new JButton("Calculate Charges ");
+        exitButton = new JButton(" Exit ");
+
+        // Register the action listeners.
+        calcButton.addActionListener(new CalcButtonListener());
+        exitButton.addActionListener(new ExitButtonListener());
+
+        // Add the buttons to the button panel.
+        buttonPanel.add(calcButton);
+        buttonPanel.add(exitButton);
+
+    }
+
+    /**
+     * Private inner class that handles the event when the user clicks the
+     * Calculate button
+     */
+    private class CalcButtonListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            // Variables  to hold the price of the min
+            String minInput;
+            double minConverted;   // Converts min to double
+
+            double dayPrice = 0;
+            // Gets min that were entered
+            // minInput = minTextField.getText();
+
+            //Calculate the cost of the minutes by multipling min by rate
+            minConverted = (selectRate.getRatePlan() * minutesUsed.getMinUsed());
+
+            // Create a DecimalFormat object to format the totals as dollar amounts.
+            DecimalFormat price = new DecimalFormat("$#,##0.00");
+
+            String cost = price.format(minConverted);
+            // priceTextField.setText(cost);
+
+            JOptionPane.showMessageDialog(null, cost);
+        }
+    }
+
+    private static class ExitButtonListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
+        }
+    }
+
+    public static void main(String[] args) {
+        new LongDistanceCalls();
+    }
+}
