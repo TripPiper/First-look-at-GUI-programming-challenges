@@ -1,0 +1,135 @@
+package latintranslator;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+
+/**
+ *
+ * @author Tutor
+ */
+public class Translator extends JFrame {
+
+    private JPanel panel, panel1, panel2;           // To reference the panel
+    private JLabel messageLabel;      // To reference a label
+    //private JTextField kiloTextField;  // to reference a test field
+    private JButton sinisterButton;            // To reference a button
+    private JButton dexterButton;
+    private JButton mediumButton;
+    private final int WINDOW_WIDTH = 200; // Window width in pixel
+    private final int WINDOW_HEIGHT = 125; // Window height in pixel
+
+    /**
+     * Constructor
+     */
+    public Translator() {
+        //Set the title.
+        setTitle("Translator ");
+
+        // Set the size of the window.
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+        //Specify what happens when the close buttom is clicked.
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Creates a label 
+        messageLabel = new JLabel("Click button to select a word. ");
+        // Creates 3 buttons
+        sinisterButton = new JButton(" Sinister ");
+        dexterButton = new JButton(" Dexter ");
+        mediumButton = new JButton(" Medium ");
+
+        //register an event listner for all 3 button
+        sinisterButton.addActionListener(new SinisterButtonListener());
+        dexterButton.addActionListener(new DexterButtonListener());
+        mediumButton.addActionListener(new MediumButtonListener());
+
+        //create a panel and add the components to it.
+        panel = new JPanel();
+        panel1 = new JPanel();
+        panel2 = new JPanel();
+         panel.setLayout(new GridLayout(4,1));
+        panel.setBorder(BorderFactory.createTitledBorder("Latin word"));
+        //panel.setBorder(BorderFactory.createTitledBorder("Latin word"));
+
+        panel.add(messageLabel);
+        panel.add(sinisterButton);
+        panel.add(dexterButton);
+        panel.add(mediumButton);
+        //getContentPane().setBackground(Color.GREEN);
+
+        //Add the panel to content pane.
+        add(panel);
+        //add(panel1);
+        //add(panel2);
+        setContentPane(panel);
+        getContentPane().setBackground(Color.ORANGE);
+
+        // disply the window
+        setVisible(true);
+    }
+
+    /**
+     * Private inner class that handles the event when the user clicks the Red
+     * button
+     */
+    private class SinisterButtonListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+
+            // Set the panel's background to red
+            panel.setBackground(Color.RED);
+            // Set the label's text to blue
+            messageLabel.setForeground(Color.BLUE);
+            JOptionPane.showMessageDialog(null, "Left");
+        }
+    }
+
+    /**
+     * Private inner class that handles the event when the user clicks the blue
+     * button
+     */
+    private class DexterButtonListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            // Set the panel's background to red
+            panel.setBackground(Color.BLUE);
+            // Set the label's text to blue
+            messageLabel.setForeground(Color.YELLOW);
+
+            JOptionPane.showMessageDialog(null, " Right ");
+        }
+
+    }
+
+    /**
+     * Private inner class that handles the event when the user clicks the
+     * yellow button
+     */
+    private class MediumButtonListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            // Set the panel's background to yellow
+            panel.setBackground(Color.YELLOW);
+            // Set the label's text to black
+            messageLabel.setForeground(Color.BLACK);
+
+            JOptionPane.showMessageDialog(null, "Center");
+        }
+
+    }
+
+    public static void main(String[] args) {
+        new Translator();
+    }
+}
