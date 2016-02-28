@@ -1,0 +1,53 @@
+package chapter7inchapterexamples;
+
+import java.awt.GridLayout;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+/**
+ *
+ * @author Tutor
+ */
+public class TimeClock extends JPanel {
+
+    private JPanel panel;
+
+    private JLabel timeInLabel;
+    private JLabel timeOutLabel;
+
+    private JTextField timeInTextField;
+    private JTextField timeOutField;
+
+    public TimeClock() {
+        setLayout(new GridLayout(2, 1));
+        timeInLabel = new JLabel(" Enter Time in: ");
+        timeInTextField = new JTextField(7);
+
+        
+        // Add a border around the panel.
+        setBorder(BorderFactory.createTitledBorder(" Time in "));
+        //Add button to panel
+        add(timeInLabel);
+        add(timeInTextField);
+
+    }
+
+    /**
+     * gettimeIn method
+     *
+     * @return the call duration
+     */
+    public double getTimeIn() {
+        double timeIn = 0.0;
+        String timeInS;
+
+        timeInS = timeInTextField.getText();
+        timeIn = Double.parseDouble(timeInS);
+
+        return timeIn;
+    }
+
+}
