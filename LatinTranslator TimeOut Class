@@ -1,0 +1,46 @@
+import java.awt.GridLayout;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+/**
+ *
+ * @author Tutor
+ */
+public class TimeOut extends JPanel {
+
+    private JPanel panel;
+    private JLabel timeOutLabel;
+    private JTextField timeOutField;
+
+    public TimeOut() {
+        setLayout(new GridLayout(2, 1));
+
+        timeOutLabel = new JLabel(" Enter Time out: ");
+        timeOutField = new JTextField(7);
+        // Add a border around the panel.
+        setBorder(BorderFactory.createTitledBorder(" Time out "));
+        //Add button to panel
+        add(timeOutLabel);
+        add(timeOutField);
+
+    }
+
+    /**
+     * gettimeIn method
+     *
+     * @return the call duration
+     */
+    public double getTimeOut() {
+        double timeOut = 0.0;
+        String timeOutS;
+
+        timeOutS = timeOutField.getText();
+        timeOut = Double.parseDouble(timeOutS);
+
+        return timeOut;
+    }
+
+}
+
