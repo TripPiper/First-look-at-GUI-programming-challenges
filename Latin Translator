@@ -1,0 +1,123 @@
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+/**
+ *
+ * @author Tutor
+ */
+public class TimeWorked extends JFrame {
+     //private GreetingPanel greetings;       // greetings panel // Not in currently in use
+    private TimeClock timeIN;                // Time Clock panel
+    private TimeOut timeOUT;                   // Time out  panel
+    private JPanel buttonPanel;                // To hold buttons
+    private JButton calcButton;               // To reference a button
+    private JButton exitButton;
+    private final int WINDOW_WIDTH = 600;			// Window Width
+    private final int WINDOW_HEIGHT = 150;			// Window Height 
+
+     /**
+     * Constructor
+     */
+    public TimeWorked() {
+        // set window title
+        setTitle(" Timed Worked ");
+
+        // set widow size
+        //setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        // tell what to do when the window closes
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //Create Border Layout manager
+        setLayout(new BorderLayout());
+
+        // build custom panel and add it to the frame
+       timeIN= new TimeClock();
+        timeOUT = new TimeOut ();
+        //greetings =new GreetingPanel();  // Not in currently in use
+
+       //Creates button panel
+        buildButtonPanel();
+
+        // Add the components to the content pane.
+      
+        add( timeIN, BorderLayout.NORTH);
+        add(timeOUT, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
+        //add(priceTextField, BorderLayout.EAST);  //Not in use currently
+        //add( greetings, BorderLayout.WEST);     // Not in currently in use
+
+        // Display the window
+        pack();
+        setVisible(true);
+    }
+    
+    
+    /**
+     * The buildButtonPanel method builds the button panel
+     */
+    private void buildButtonPanel() {
+        //Creates panel for the buttons
+        buttonPanel = new JPanel();
+
+        //Create buttons
+        calcButton = new JButton("Calculate Hours worked ");
+        exitButton = new JButton(" Exit ");
+
+        // Register the action listeners.
+        calcButton.addActionListener(new CalcButtonListener());
+        exitButton.addActionListener(new ExitButtonListener());
+
+        // Add the buttons to the button panel.
+        buttonPanel.add(calcButton);
+        buttonPanel.add(exitButton);
+
+    }
+
+    /**
+     * Private inner class that handles the event when the user clicks the
+     * Calculate button
+     */
+    
+    
+     private class CalcButtonListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            // Variables  to hold the price of the min
+            String minInput;
+            double minConverted;   // Converts min to double
+
+            double dayPrice = 0;
+            // Gets min that were entered
+            // minInput = minTextField.getText();
+
+            //Calculate the cost of the minutes by multipling min by rate
+            minConverted = (( timeOUT.getTimeOut())- timeIN.getTimeIn() );
+
+            // Create a DecimalFormat object to format the totals as dollar amounts.
+            DecimalFormat price = new DecimalFormat("00.00");
+
+            String cost = price.format(minConverted);
+            // priceTextField.setText(cost);
+
+            JOptionPane.showMessageDialog(null,"Hours worked " + cost );
+        }
+    }
+
+    private static class ExitButtonListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
+        }
+    }
+
+    public static void main(String[] args) {
+        new TimeWorked ();
+    }
+}
+
